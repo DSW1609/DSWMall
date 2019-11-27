@@ -29,10 +29,11 @@ export default {
 .goods-list-item {
   position: relative;
   display: inline-block;
-  width: 44%;
-  margin: 3%;
+  width: 47%;
+  margin-left: 2%;
   text-align: center;
   vertical-align: top;
+  margin-top: 2%;
 }
 .goods-list-item img {
   width: 100%;
@@ -52,7 +53,7 @@ export default {
 }
 .price {
   color: tomato;
-  padding-right: 10px;
+  padding-right: 15px;
 }
 .collect {
   color: lightskyblue;
