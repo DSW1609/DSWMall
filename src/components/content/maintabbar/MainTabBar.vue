@@ -1,5 +1,5 @@
 <template>
-  <tab-bar>
+  <tab-bar class="tab-bar">
     <tab-bar-item path="/home">
       <div slot="item-icon">
         <img src="~assets/img/tabbar/sy.png" alt />
@@ -53,4 +53,7 @@ export default {
 </script>
 
 <style>
+.tab-bar{
+  z-index: 999
+}
 </style>
