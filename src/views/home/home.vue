@@ -8,21 +8,35 @@
       <div slot="center">
         <div class="home_search">
           <!-- 搜索输入框 -->
-          <input type="text" class="home_search_in" />
+          <input type="text" class="home_search_in" placeholder="Vue NiuBi !!! DSW NiuBi !!!" />
           <!-- 右侧搜索图标 -->
           <img class="home_center_img" src="~assets/img/home/search.png" alt />
         </div>
       </div>
       <div slot="right">DSW</div>
     </nav-bar>
-    <!-- 轮播图 -->
-    <home-swiper :banners="banners" />
-    <!-- 推荐栏 -->
-    <recommend-view :recommends="recommends" />
-    <!-- 本周流行 -->
-    <feature-view />
-    <tab-control class="tab-control" :titles="titles" @tabClick="tabClick" />
-    <goods-list :goods="showGoods" />
+    <!-- 使用better-scroll -->
+    <scroll
+      class="content"
+      ref="scroll"
+      :probe-type="3"
+      :pull-up-load="true"
+      @scroll="contentScroll"
+      @pullingUp="loadMore"
+    >
+      <!-- 轮播图 -->
+      <home-swiper :banners="banners" />
+      <!-- 推荐栏 -->
+      <recommend-view :recommends="recommends" />
+      <!-- 本周流行 -->
+      <feature-view />
+      <!-- tab栏 -->
+      <tab-control class="tab-control" :titles="titles" @tabClick="tabClick" />
+      <!-- 展示商品 -->
+      <goods-list :goods="showGoods" />
+    </scroll>
+    <!-- 回到顶部 -->
+    <back-top @click.native="backClick" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -34,6 +48,8 @@ import FeatureView from "./childComps/FeatureView";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
+import Scroll from "components/common/scroll/Scroll";
+import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
@@ -45,7 +61,9 @@ export default {
     FeatureView,
     NavBar,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll,
+    BackTop
   },
   data() {
     return {
@@ -60,7 +78,9 @@ export default {
       // 定义数组存储需要展示的数据
       titlesType: ["pop", "new", "sell"],
       // 默认展示pop的数据
-      goodsType: "pop"
+      goodsType: "pop",
+      // backTop的状态
+      isShowBackTop: false
     };
   },
   computed: {
@@ -84,6 +104,21 @@ export default {
     tabClick(index) {
       this.goodsType = this.titlesType[index];
     },
+    // 回到顶部
+    backClick() {
+      this.$refs.scroll.scrollTo(0, 0);
+    },
+    // backTop显示隐藏
+    contentScroll(position) {
+      this.isShowBackTop = -position.y > 1000;
+    },
+    // 上拉加载更多
+    loadMore() {
+      console.log("我加载了哈哈哈!");
+      this.getHomeGoods(this.goodsType);
+      // 图片加载完成,重新计算可滚动高度
+      this.$refs.scroll.scroll.refresh();
+    },
     /**
      *网络请求相关的方法
      */
@@ -98,15 +133,17 @@ export default {
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
+        this.$refs.scroll.finishPullUp();
       });
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 #home {
   padding-top: 44px;
+  height: 100vh;
 }
 .home-nav {
   position: fixed;
@@ -158,5 +195,13 @@ export default {
   top: 3px;
   right: 10px;
   background: #fff;
+}
+.content {
+  position: absolute;
+  overflow: hidden;
+  top: 44px;
+  bottom: 2px;
+  left: 0;
+  right: 0;
 }
 </style>
