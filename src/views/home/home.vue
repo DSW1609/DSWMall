@@ -15,6 +15,14 @@
       </div>
       <div slot="right">DSW</div>
     </nav-bar>
+    <!-- tab栏 -->
+    <tab-control
+      :titles="titles"
+      @tabClick="tabClick"
+      ref="tabControl1"
+      class="tab-control"
+      v-show="isTabFixed"
+    />
     <!-- 使用better-scroll -->
     <scroll
       class="content"
@@ -24,14 +32,16 @@
       @scroll="contentScroll"
       @pullingUp="loadMore"
     >
+      <!-- 画个心心 -->
+      <xinxin />
       <!-- 轮播图 -->
-      <home-swiper :banners="banners" />
+      <home-swiper :banners="banners" @swiperImageLoad.once="swiperImageLoad" />
       <!-- 推荐栏 -->
       <recommend-view :recommends="recommends" />
       <!-- 本周流行 -->
       <feature-view />
       <!-- tab栏 -->
-      <tab-control class="tab-control" :titles="titles" @tabClick="tabClick" />
+      <tab-control :titles="titles" @tabClick="tabClick" ref="tabControl2" />
       <!-- 展示商品 -->
       <goods-list :goods="showGoods" />
     </scroll>
@@ -50,8 +60,10 @@ import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/backTop/BackTop";
+import xinxin from "components/content/xinxin/xinxin";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
+import { debounce } from "common/untils";
 
 export default {
   name: "home",
@@ -63,7 +75,8 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop
+    BackTop,
+    xinxin
   },
   data() {
     return {
@@ -80,7 +93,9 @@ export default {
       // 默认展示pop的数据
       goodsType: "pop",
       // backTop的状态
-      isShowBackTop: false
+      isShowBackTop: false,
+      // tabControld的浮动状态
+      isTabFixed: false
     };
   },
   computed: {
@@ -92,17 +107,38 @@ export default {
   created() {
     // 请求多个数据
     this.getHomeMultidata();
+
     // 请求商品数据
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
   },
+  mounted() {
+    // 监听item中图片加载完成
+    const refresh = debounce(this.$refs.scroll.refresh, 200);
+    this.$bus.$on("itemImageLoad", () => {
+      refresh();
+    });
+  },
   methods: {
     /**
      * 事件监听相关的方法
      */
+    // tab栏点击事件
     tabClick(index) {
+      // 根据点击的标签，切换需要请求的数据类型
       this.goodsType = this.titlesType[index];
+
+      // 给两个tab栏的currentIndex相同的值，确保状态一致
+      this.$refs.tabControl1.currentIndex = index;
+      this.$refs.tabControl2.currentIndex = index;
+
+      // 实时记录当前标签的offsetY的值
+      // 保存
+
+      // 点击标签切换后，使页面滚动到指定值 ↓ (70 为心心的高度)
+      this.$refs.scroll.scrollTo(0, -this.tabOffsetTop + 70);
+      //
     },
     // 回到顶部
     backClick() {
@@ -111,13 +147,18 @@ export default {
     // backTop显示隐藏
     contentScroll(position) {
       this.isShowBackTop = -position.y > 1000;
+
+      //决定tabControl是否吸顶
+      this.isTabFixed = -position.y > this.tabOffsetTop - 70;
     },
-    // 上拉加载更多
+    // 加载更多
     loadMore() {
-      console.log("我加载了哈哈哈!");
       this.getHomeGoods(this.goodsType);
-      // 图片加载完成,重新计算可滚动高度
-      this.$refs.scroll.scroll.refresh();
+    },
+    // 获取tabControl的offsetTop
+    swiperImageLoad() {
+      // 所有的组件都有一个属性$el:用于获取组件的元素
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
     },
     /**
      *网络请求相关的方法
@@ -133,6 +174,8 @@ export default {
       getHomeGoods(type, page).then(res => {
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
+
+        // 完成上拉加载更多
         this.$refs.scroll.finishPullUp();
       });
     }
@@ -159,11 +202,6 @@ export default {
   width: 100%;
   height: 1000px;
   background: #eee;
-}
-.tab-control {
-  position: sticky;
-  top: 44px;
-  z-index: 998;
 }
 .home_search {
   position: relative;
@@ -199,9 +237,16 @@ export default {
 .content {
   position: absolute;
   overflow: hidden;
-  top: 44px;
+  top: -26px;
   bottom: 2px;
   left: 0;
   right: 0;
+  background: #fff;
+}
+.tab-control {
+  position: relative;
+  z-index: 999;
+  top: 0;
+  top: -1px;
 }
 </style>

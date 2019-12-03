@@ -36,10 +36,12 @@ export default {
     this.scroll.on("scroll", position => {
       this.$emit("scroll", position);
     });
-    // 监听上拉事件
-    this.scroll.on("pullingUp", () => {
-      this.$emit("pullingUp");
-    });
+    // 监听滚到底部
+    if (this.pullUpLoad) {
+      this.scroll.on("pullingUp", () => {
+        this.$emit("pullingUp")
+      });
+    }
   },
   methods: {
     scrollTo(x, y, time = 500) {
@@ -47,6 +49,9 @@ export default {
     },
     finishPullUp() {
       this.scroll.finishPullUp();
+    },
+    refresh() {
+      this.scroll.refresh();
     }
   }
 };
