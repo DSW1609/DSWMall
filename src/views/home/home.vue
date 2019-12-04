@@ -107,13 +107,24 @@ export default {
       // 保存三个tab栏内内容滚动的值
       tabScroll: [0, 0, 0],
       // 定义一个变量控制滚动时间
-      scrollTime: 500
+      scrollTime: 500,
+      // 保存当前页面滚动的值
+      saveY: 0
     };
   },
   computed: {
     showGoods() {
       return this.goods[this.goodsType].list;
     }
+  },
+  activated() {
+    this.$refs.scroll.refresh();
+    this.$refs.scroll.scrollTo(0, this.saveY, 0);
+    // 重新进来刷新一次
+  },
+  deactivated() {
+    // 保存当前的位置
+    this.saveY = this.$refs.scroll.scroll.y;
   },
   // 创建完发送网络请求！
   created() {
