@@ -13,8 +13,13 @@
           <img class="home_center_img" src="~assets/img/home/search.png" alt />
         </div>
       </div>
-      <div slot="right">DSW</div>
+      <div slot="right" @click="dswClick">DSW</div>
     </nav-bar>
+    <!-- 隐藏框 -->
+    <div class="dswNiubi" :class="{dswNiubiShow:isDsw}">
+      <span>王嘉辉 NiuBi !!!</span>
+      <span>王嘉辉 NiuBi !!!</span>
+    </div>
     <!-- tab栏 -->
     <tab-control
       :titles="titles"
@@ -82,6 +87,7 @@ export default {
     return {
       banners: [],
       recommends: [],
+      isDsw: false,
       goods: {
         pop: { page: 0, list: [] },
         new: { page: 0, list: [] },
@@ -183,6 +189,15 @@ export default {
       // 所有的组件都有一个属性$el:用于获取组件的元素
       this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
     },
+    // 点击右上角DSW相关
+    dswClick() {
+      // 点击弹出隐藏框
+      this.isDsw = true;
+      // 3s后消失
+      setTimeout(() => {
+        this.isDsw = false;
+      }, 3000);
+    },
     /**
      *网络请求相关的方法
      */
@@ -269,7 +284,23 @@ export default {
 .tab-control {
   position: relative;
   z-index: 999;
-  top: 0;
   top: -1px;
+}
+.dswNiubi {
+  position: absolute;
+  width: 100%;
+  height: 44px;
+  background: black;
+  z-index: 999;
+  top: -44px;
+  color: #b34ffd;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 1px;
+  line-height: 44px;
+  transition: 0.5s;
+}
+.dswNiubiShow {
+  top: 0;
 }
 </style>
