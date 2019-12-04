@@ -95,7 +95,13 @@ export default {
       // backTop的状态
       isShowBackTop: false,
       // tabControld的浮动状态
-      isTabFixed: false
+      isTabFixed: false,
+      // 保存当前点击的index的值
+      tabIndex: 0,
+      // 保存三个tab栏内内容滚动的值
+      tabScroll: [0, 0, 0],
+      // 定义一个变量控制滚动时间
+      scrollTime: 500
     };
   },
   computed: {
@@ -128,28 +134,45 @@ export default {
     tabClick(index) {
       // 根据点击的标签，切换需要请求的数据类型
       this.goodsType = this.titlesType[index];
+      // 保存当前点击的index的值
+      this.tabIndex = index;
 
       // 给两个tab栏的currentIndex相同的值，确保状态一致
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
 
-      // 实时记录当前标签的offsetY的值
-      // 保存
+      // 点击标签切换后，使页面滚动到指定值
+      this.$refs.scroll.scrollTo(0, -this.tabScroll[index], this.scrollTime);
 
-      // 点击标签切换后，使页面滚动到指定值 ↓ (70 为心心的高度)
-      this.$refs.scroll.scrollTo(0, -this.tabOffsetTop + 70);
       //
     },
     // 回到顶部
     backClick() {
       this.$refs.scroll.scrollTo(0, 0);
     },
-    // backTop显示隐藏
+    // 滚动相关
     contentScroll(position) {
+      // backTop显示隐藏
       this.isShowBackTop = -position.y > 1000;
 
       //决定tabControl是否吸顶
-      this.isTabFixed = -position.y > this.tabOffsetTop - 70;
+      this.isTabFixed = -position.y >= this.tabOffsetTop - 70;
+
+      // 根据tabIndex保存当前滚动的位置
+
+      // tab栏吸顶后再保存数据
+      if (this.isTabFixed) {
+        this.tabScroll[this.tabIndex] = -position.y;
+        // 吸顶后切换滚动时间为0
+        this.scrollTime = 0;
+      } else {
+        // 给点击的tab标签滚动的高度一个默认值
+        for (let i = 0; i < this.tabScroll.length; i++) {
+          this.tabScroll[i] = this.tabOffsetTop - 70;
+          // 未吸顶切换滚动时间为500
+          this.scrollTime = 500;
+        }
+      }
     },
     // 加载更多
     loadMore() {
