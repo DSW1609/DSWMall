@@ -42,6 +42,7 @@ export default {
 
 <style scoped>
 .DetailNavBar {
+  box-sizing: border-box;
   border-bottom: 1px solid #f1f1f1;
 }
 .title {
@@ -52,12 +53,19 @@ export default {
   flex: 1;
 }
 .active {
-  color: #5ecef4;
+  color: #f2cd86;
 }
-.go img {
+.go {
   position: relative;
   width: 20px;
   height: 20px;
-  top: 5px;
+  left: 30%;
+  top: 12px;
+}
+.go img {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 0px;
 }
 </style>

@@ -25,7 +25,7 @@ export default {
   left: -25%;
   width: 150%;
   height: 100px;
-  background: #ff8198;
+  background: black;
   opacity: 0.98;
   filter: blur(10px);
   z-index: -1;

@@ -52,7 +52,7 @@ export default {
   position: relative;
 }
 .active {
-  color: #30f8d0;
+  color: #f2cd86;
 }
 </style>
 
