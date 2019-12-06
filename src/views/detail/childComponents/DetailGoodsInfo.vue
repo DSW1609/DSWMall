@@ -1,5 +1,5 @@
 <template>
-  <span>{{detailInfo.desc}}</span>
+  <div class="GoodsiInfo">{{detailInfo.desc}}</div>
 </template>
 
 <script>
@@ -13,5 +13,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.GoodsiInfo{
+  height: 100vh;
+}
 </style>

@@ -87,6 +87,7 @@ export default {
   width: 96vw;
   margin: 0 auto;
   top: 10px;
+  font-size: 14px;
   border-top: 0.6vh solid #f8f8f8;
 }
 .shop_name {
@@ -127,7 +128,6 @@ export default {
   position: relative;
   width: 40%;
   height: 100px;
-  margin-left: 5%;
   top: 10px;
 }
 .shop_l_item {
@@ -139,7 +139,7 @@ export default {
   text-align: center;
   line-height: 30px;
   color: #555;
-  top:-5px;
+  top: -5px;
 }
 .l_item_xx {
   width: 100%;
@@ -155,15 +155,16 @@ export default {
 .r_item_lte {
   position: relative;
   float: left;
-  width: 45%;
+  width: 55%;
   height: 100%;
   color: #555;
   font-weight: bold;
+  left: 3%;
 }
 .r_item_cnum {
   position: relative;
   float: left;
-  width: 30%;
+  width: 20%;
   height: 100%;
   top: 0;
   left: 11%;
@@ -180,6 +181,7 @@ export default {
   height: 100%;
   right: 0;
   top: 0;
+  left: 10%;
   text-align: right;
 }
 .r_item_rte span {

@@ -85,5 +85,6 @@ export default {
   top: -26px;
   left: 0;
   right: 0;
+  bottom: 0px;
 }
 </style>
