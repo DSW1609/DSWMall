@@ -1,8 +1,19 @@
 <template>
   <div id="detail">
-    <detail-nav-bar />
-    <detail-swiper :images="images" />
-    <detail-base-info :goods="goods" />
+    <!-- 顶部导航栏 -->
+    <DetailNavBar />
+    <scroll class="content">
+      <!-- 心心 -->
+      <XinXin />
+      <!-- 顶部轮播图 -->
+      <DetailSwiper :images="images" />
+      <!-- 商品基本数据展示 -->
+      <DetailBaseInfo :goods="goods" />
+      <!-- 商家信息展示 -->
+      <DetailShopInfo :shop="shop" />
+      <!-- 详情页数据展示 -->
+      <DetailGoodsInfo :detailInfo="detailInfo" />
+    </scroll>
   </div>
 </template>
 
@@ -10,21 +21,32 @@
 import DetailNavBar from "./childComponents/DetailNavBar";
 import DetailSwiper from "./childComponents/DetailSwiper";
 import DetailBaseInfo from "./childComponents/DetailBaseInfo";
+import DetailShopInfo from "./childComponents/DetailShopInfo";
+import DetailGoodsInfo from "./childComponents/DetailGoodsInfo";
+import XinXin from "components/content/xinxin/XinXin";
 
-import { getDetail, Goods } from "network/detail";
+import Scroll from "components/common/scroll/Scroll";
+
+import { getDetail, Goods, Shop } from "network/detail";
 
 export default {
   name: "Detail",
   components: {
     DetailNavBar,
     DetailSwiper,
-    DetailBaseInfo
+    DetailBaseInfo,
+    DetailShopInfo,
+    DetailGoodsInfo,
+    XinXin,
+    Scroll
   },
   data() {
     return {
       iid: null,
       images: [],
-      goods: {}
+      goods: {},
+      shop: {},
+      detailInfo: {}
     };
   },
   created() {
@@ -41,10 +63,27 @@ export default {
         data.columns,
         data.shopInfo.services
       );
+      // 获取店铺信息
+      this.shop = new Shop(data.shopInfo);
+      // 保存详情页数据
+      this.detailInfo = data.detailInfo;
     });
   }
 };
 </script>
 
-<style>
+<style scoped>
+#detail {
+  position: relative;
+  z-index: 1000;
+  background: #fff;
+  height: 100vh;
+}
+.content {
+  position: absolute;
+  overflow: hidden;
+  top: -26px;
+  left: 0;
+  right: 0;
+}
 </style>

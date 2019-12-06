@@ -42,8 +42,10 @@ export default {
 
 <style scoped>
 .DetailNavBar {
-  box-sizing: border-box;
-  border-bottom: 1px solid #f1f1f1;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  background: #fff;
 }
 .title {
   display: flex;

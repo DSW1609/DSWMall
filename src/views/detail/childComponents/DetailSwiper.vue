@@ -25,6 +25,6 @@ export default {
 <style scoped>
 .deSwiper {
   position: absolute;
-  height: 35vh;
+  height: 45vh;
 }
 </style>

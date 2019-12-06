@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <!-- 顶部标题栏 -->
-    <nav-bar class="home-nav">
+    <NavBar class="home-nav">
       <div slot="left">
         <img class="home_left_img" src="~assets/img/home/sm.png" alt />
       </div>
@@ -14,14 +14,14 @@
         </div>
       </div>
       <div slot="right" @click="dswClick">DSW</div>
-    </nav-bar>
+    </NavBar>
     <!-- 隐藏框 -->
     <div class="dswNiubi" :class="{dswNiubiShow:isDsw}">
       <span>王嘉辉 NiuBi !!!</span>
       <span>王嘉辉 NiuBi !!!</span>
     </div>
     <!-- tab栏 -->
-    <tab-control
+    <TabControl
       :titles="titles"
       @tabClick="tabClick"
       ref="tabControl1"
@@ -38,20 +38,20 @@
       @pullingUp="loadMore"
     >
       <!-- 画个心心 -->
-      <xinxin />
+      <XinXin />
       <!-- 轮播图 -->
-      <home-swiper :banners="banners" @swiperImageLoad.once="swiperImageLoad" />
+      <HomeSwiper :banners="banners" @swiperImageLoad.once="swiperImageLoad" />
       <!-- 推荐栏 -->
-      <recommend-view :recommends="recommends" />
+      <RecommendView :recommends="recommends" />
       <!-- 本周流行 -->
-      <feature-view />
+      <FeatureView />
       <!-- tab栏 -->
-      <tab-control :titles="titles" @tabClick="tabClick" ref="tabControl2" />
+      <TabControl :titles="titles" @tabClick="tabClick" ref="tabControl2" />
       <!-- 展示商品 -->
-      <goods-list :goods="showGoods" />
+      <GoodsList :goods="showGoods" />
     </scroll>
     <!-- 回到顶部 -->
-    <back-top @click.native="backClick" v-show="isShowBackTop" />
+    <BackTop @click.native="backClick" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -65,7 +65,7 @@ import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/backTop/BackTop";
-import xinxin from "components/content/xinxin/xinxin";
+import XinXin from "components/content/xinxin/XinXin";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
 import { debounce } from "common/untils";
@@ -81,7 +81,7 @@ export default {
     GoodsList,
     Scroll,
     BackTop,
-    xinxin
+    XinXin
   },
   data() {
     return {
