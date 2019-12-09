@@ -4,7 +4,7 @@
     <div class="shop_name">
       <!-- 左侧商家头像 -->
       <div class="shop_name_im">
-        <img :src="shop.logo" alt />
+        <img :src="'http:'+shop.logo" alt />
       </div>
       <!-- 右侧商家名字 -->
       <div class="shop_name_te">

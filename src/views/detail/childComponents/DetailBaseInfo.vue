@@ -22,7 +22,7 @@
     <!-- 其他 -->
     <div class="other">
       <!-- 销量 -->
-      <div class="other_item">
+      <div class="other_item other_item_l">
         <span>{{goods.columns[0]}}</span>
       </div>
       <div class="other_item other_item_c">
@@ -35,19 +35,9 @@
     <!-- 售后相关 -->
     <div class="after other">
       <!-- 退货 -->
-      <div class="other_item">
-        <img :src="goods.services[0].icon" alt />
-        <span>{{goods.services[0].name}}</span>
-      </div>
-      <!-- 退货 -->
-      <div class="other_item other_item_c">
-        <img :src="goods.services[1].icon" alt />
-        <span>{{goods.services[1].name}}</span>
-      </div>
-      <!-- 退货 -->
-      <div class="other_item other_item_r">
-        <img :src="goods.services[2].icon" alt />
-        <span>{{goods.services[2].name}}</span>
+      <div class="other_item" v-for="(o,index) in goods.services.length-1" :key="index">
+        <img :src="'http:'+goods.services[1].icon" alt />
+        <span>{{goods.services[index].name}}</span>
       </div>
     </div>
   </div>
@@ -116,7 +106,11 @@ export default {
   border-bottom: 1px solid #f1f1f1;
 }
 .other_item {
+  text-align: center;
   flex: 1;
+}
+.other_item_l {
+  text-align: left;
 }
 .other_item_c {
   text-align: center;

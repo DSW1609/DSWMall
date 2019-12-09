@@ -13,6 +13,8 @@
       <DetailShopInfo :shop="shop" />
       <!-- 详情页数据展示 -->
       <DetailGoodsInfo :detailInfo="detailInfo" />
+      <!-- 详情页参数展示 -->
+      <DetailParamsInfo :itemParams="itemParams" />
     </scroll>
   </div>
 </template>
@@ -23,6 +25,7 @@ import DetailSwiper from "./childComponents/DetailSwiper";
 import DetailBaseInfo from "./childComponents/DetailBaseInfo";
 import DetailShopInfo from "./childComponents/DetailShopInfo";
 import DetailGoodsInfo from "./childComponents/DetailGoodsInfo";
+import DetailParamsInfo from "./childComponents/DetailParamsInfo";
 import XinXin from "components/content/xinxin/XinXin";
 
 import Scroll from "components/common/scroll/Scroll";
@@ -37,6 +40,7 @@ export default {
     DetailBaseInfo,
     DetailShopInfo,
     DetailGoodsInfo,
+    DetailParamsInfo,
     XinXin,
     Scroll
   },
@@ -46,7 +50,8 @@ export default {
       images: [],
       goods: {},
       shop: {},
-      detailInfo: {}
+      detailInfo: {},
+      itemParams: {}
     };
   },
   created() {
@@ -67,6 +72,8 @@ export default {
       this.shop = new Shop(data.shopInfo);
       // 保存详情页数据
       this.detailInfo = data.detailInfo;
+      // 获得参数的信息
+      this.itemParams = data.itemParams;
     });
   }
 };
