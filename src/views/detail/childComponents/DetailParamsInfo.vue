@@ -11,14 +11,14 @@
       <!-- 单列 -->
       <div class="rule_d" v-for="(item,indey) in one" :key="indey">{{item}}</div>
     </div>
-    <!-- 其他参数 -->
+    <!-- 详细参数 -->
     <div class="more">
       <span>详细参数</span>
     </div>
     <div :class="{info:isX}">
       <!-- 点击展开按钮 -->
       <div class="info_bt" v-if="isX" @click="info_click">
-        <span>👇</span>
+        <img src="~assets/img/detail/to.png" alt />
       </div>
       <div class="rule_one info_one" v-for="(info,index) in itemParams.info.set" :key="index+'a'">
         <!-- 左侧key -->
@@ -88,8 +88,11 @@ export default {
   position: relative;
   flex: 4;
   text-align: left;
-  left: 7vw;
+  margin-left: 7vw;
   color: #ff5680;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .more {
   position: relative;
@@ -107,7 +110,7 @@ export default {
 }
 .info_bt {
   position: absolute;
-  width: 50%;
+  width: 20%;
   text-align: center;
   background: #f1f1f1;
   left: 0;
@@ -115,5 +118,10 @@ export default {
   margin: 0 auto;
   margin-top: 160px;
   z-index: 1;
+  opacity: 0.8;
+  border-radius: 20px;
+}
+.info_bt img {
+  width: 20px;
 }
 </style>

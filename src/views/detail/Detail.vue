@@ -15,6 +15,8 @@
       <DetailGoodsInfo :detailInfo="detailInfo" />
       <!-- 详情页参数展示 -->
       <DetailParamsInfo :itemParams="itemParams" />
+      <!-- 详情页评论展示 -->
+      <DetailCommentInfo :commentInfo="commentInfo" />
     </scroll>
   </div>
 </template>
@@ -26,6 +28,8 @@ import DetailBaseInfo from "./childComponents/DetailBaseInfo";
 import DetailShopInfo from "./childComponents/DetailShopInfo";
 import DetailGoodsInfo from "./childComponents/DetailGoodsInfo";
 import DetailParamsInfo from "./childComponents/DetailParamsInfo";
+import DetailCommentInfo from "./childComponents/DetailCommentInfo";
+
 import XinXin from "components/content/xinxin/XinXin";
 
 import Scroll from "components/common/scroll/Scroll";
@@ -41,6 +45,7 @@ export default {
     DetailShopInfo,
     DetailGoodsInfo,
     DetailParamsInfo,
+    DetailCommentInfo,
     XinXin,
     Scroll
   },
@@ -51,7 +56,8 @@ export default {
       goods: {},
       shop: {},
       detailInfo: {},
-      itemParams: {}
+      itemParams: {},
+      commentInfo: {}
     };
   },
   created() {
@@ -74,6 +80,10 @@ export default {
       this.detailInfo = data.detailInfo;
       // 获得参数的信息
       this.itemParams = data.itemParams;
+      // 取出评论信息
+      if (data.rate.cRate !== 0) {
+        this.commentInfo = data.rate.list[0];
+      }
     });
   }
 };
