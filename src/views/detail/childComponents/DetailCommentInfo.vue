@@ -32,11 +32,15 @@
         </div>
       </div>
     </div>
+    <!-- 用户评价标题 -->
+    <div class="user_tit">
+      <span>更多推荐</span>
+    </div>
   </div>
 </template>
 
 <script>
-import { formatDate } from "common/untils";
+import { formatDate } from "common/utils";
 export default {
   props: {
     commentInfo: {
@@ -107,6 +111,7 @@ export default {
 .user_content {
   position: relative;
   width: 93vw;
+  height: auto;
   margin: 0 auto;
   margin-top: 8px;
   color: #0d88eb;
@@ -125,7 +130,9 @@ export default {
 }
 .user_img img {
   position: relative;
-  float: left;
-  width: 30%;
+  display: inline-block;
+  width: 20%;
+  left: -5px;
+  margin-left: 5px;
 }
 </style>

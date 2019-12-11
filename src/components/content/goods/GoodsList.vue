@@ -22,4 +22,7 @@ export default {
 </script>
 
 <style scoped>
+.goods{
+  padding-bottom: 20px;
+}
 </style>

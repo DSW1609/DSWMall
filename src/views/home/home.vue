@@ -68,7 +68,7 @@ import BackTop from "components/content/backTop/BackTop";
 import XinXin from "components/content/xinxin/XinXin";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
-import { debounce } from "common/untils";
+import { debounce } from "common/utils";
 
 export default {
   name: "home",
@@ -139,7 +139,7 @@ export default {
   mounted() {
     // 监听item中图片加载完成
     const refresh = debounce(this.$refs.scroll.refresh, 200);
-    this.$bus.$on("itemImageLoad", () => {
+    this.$bus.$on("homeItemImageLoad", () => {
       refresh();
     });
   },

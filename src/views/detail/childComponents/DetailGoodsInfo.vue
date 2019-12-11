@@ -8,6 +8,7 @@
         v-for="(img,index) in detailInfo.detailImage[0].list"
         :key="index"
         :src="'http:'+img"
+        @load="detailImgLoad"
         alt
       />
     </div>
@@ -20,6 +21,11 @@ export default {
     detailInfo: {
       type: Object,
       default: {}
+    }
+  },
+  methods: {
+    detailImgLoad() {
+      this.$emit("detailImgLoad");
     }
   }
 };

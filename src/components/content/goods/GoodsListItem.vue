@@ -1,6 +1,6 @@
 <template>
   <div class="goods-list-item" @click="itemClick">
-    <img :src="goodsItem.show.img" alt @load="imageLoad" />
+    <img :src="showImage" alt @load="imageLoad" />
     <div class="goods-list-text">
       <p>{{goodsItem.title}}</p>
       <span class="price">￥{{goodsItem.price}}</span>
@@ -18,13 +18,18 @@ export default {
     goodsItem: {
       type: Object,
       default() {
-        return [];
+        return {};
       }
+    }
+  },
+  computed: {
+    showImage() {
+      return this.goodsItem.image || this.goodsItem.show.img;
     }
   },
   methods: {
     imageLoad() {
-      this.$bus.$emit("itemImageLoad");
+      this.$bus.$emit("homeItemImageLoad");
     },
     itemClick() {
       this.$router.push("/detail/" + this.goodsItem.iid);
@@ -33,7 +38,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .goods-list-item {
   position: relative;
   display: inline-block;
@@ -45,6 +50,7 @@ export default {
 }
 .goods-list-item img {
   width: 100%;
+  border-radius: 8px;
 }
 .goods-list-text {
   position: relative;

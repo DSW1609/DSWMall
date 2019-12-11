@@ -39,7 +39,7 @@ export default {
     // 监听滚到底部
     if (this.pullUpLoad) {
       this.scroll.on("pullingUp", () => {
-        this.$emit("pullingUp")
+        this.$emit("pullingUp");
       });
     }
   },

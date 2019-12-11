@@ -1,8 +1,14 @@
 <template>
   <div id="detail">
     <!-- 顶部导航栏 -->
-    <DetailNavBar />
-    <scroll class="content">
+    <DetailNavBar @titleClick="titleClick" ref="navbar" />
+    <scroll
+      class="content"
+      ref="scroll"
+      :probe-type="3"
+      :pull-up-load="true"
+      @scroll="contentScroll"
+    >
       <!-- 心心 -->
       <XinXin />
       <!-- 顶部轮播图 -->
@@ -12,12 +18,15 @@
       <!-- 商家信息展示 -->
       <DetailShopInfo :shop="shop" />
       <!-- 详情页数据展示 -->
-      <DetailGoodsInfo :detailInfo="detailInfo" />
+      <DetailGoodsInfo :detailInfo="detailInfo" @detailImgLoad="detailImgLoad" />
       <!-- 详情页参数展示 -->
-      <DetailParamsInfo :itemParams="itemParams" />
+      <DetailParamsInfo ref="params" :itemParams="itemParams" />
       <!-- 详情页评论展示 -->
-      <DetailCommentInfo :commentInfo="commentInfo" />
+      <DetailCommentInfo ref="comment" :commentInfo="commentInfo" />
+      <!-- 推荐商品 -->
+      <GoodsList ref="recommend" :goods="recommends" />
     </scroll>
+    <BackTop @click.native="backClick" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -33,8 +42,11 @@ import DetailCommentInfo from "./childComponents/DetailCommentInfo";
 import XinXin from "components/content/xinxin/XinXin";
 
 import Scroll from "components/common/scroll/Scroll";
+import BackTop from "components/content/backTop/BackTop";
+import GoodsList from "components/content/goods/GoodsList";
 
-import { getDetail, Goods, Shop } from "network/detail";
+import { getDetail, getRecommend, Goods, Shop } from "network/detail";
+import { debounce } from "common/utils";
 
 export default {
   name: "Detail",
@@ -47,7 +59,9 @@ export default {
     DetailParamsInfo,
     DetailCommentInfo,
     XinXin,
-    Scroll
+    Scroll,
+    BackTop,
+    GoodsList
   },
   data() {
     return {
@@ -57,7 +71,13 @@ export default {
       shop: {},
       detailInfo: {},
       itemParams: {},
-      commentInfo: {}
+      commentInfo: {},
+      // backTop的状态
+      isShowBackTop: false,
+      recommends: [],
+      themeTopYs: [],
+      getThemeTopY: null,
+      currentIndex: 0
     };
   },
   created() {
@@ -85,6 +105,46 @@ export default {
         this.commentInfo = data.rate.list[0];
       }
     });
+    // 请求推荐数据
+    getRecommend().then(res => {
+      this.recommends = res.data.list;
+    });
+    // 给getThemeTopY赋值
+    this.getThemeTopY = debounce(() => {
+      this.themeTopYs.push(0);
+      this.themeTopYs.push(this.$refs.params.$el.offsetTop - 75);
+      this.themeTopYs.push(this.$refs.comment.$el.offsetTop - 75);
+      this.themeTopYs.push(this.$refs.recommend.$el.offsetTop - 105);
+    }, 200);
+  },
+  methods: {
+    // 回到顶部
+    backClick() {
+      this.$refs.scroll.scrollTo(0, 0);
+    },
+    // 滚动相关
+    contentScroll(position) {
+      // 保存position.y值
+      let positionY = -position.y;
+      // backTop显示隐藏
+      this.isShowBackTop = positionY > 1000;
+      for (let i = 0; i < this.themeTopYs.length; i++) {
+        if (this.currentIndex !== i && positionY >= this.themeTopYs[i]) {
+          this.currentIndex = i;
+          this.$refs.navbar.currentIndex = this.currentIndex;
+        }
+      }
+    },
+    // 检测图片加载完成进行刷新
+    detailImgLoad() {
+      const refresh = debounce(this.$refs.scroll.refresh, 200);
+      refresh();
+      this.getThemeTopY();
+    },
+    // 标签点击事件
+    titleClick(index) {
+      this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 0);
+    }
   }
 };
 </script>
