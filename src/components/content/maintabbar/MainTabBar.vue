@@ -4,7 +4,7 @@
       <div slot="item-icon">
         <img src="~assets/img/tabbar/sy.png" alt />
       </div>
-      <div slot="item-icon-active">
+      <div slot="item-icon-active" class="icon_ac">
         <img src="~assets/img/tabbar/sy_ac.png" alt />
       </div>
       <span slot="item-text">首页</span>
@@ -13,7 +13,7 @@
       <div slot="item-icon">
         <img src="~assets/img/tabbar/fl.png" alt />
       </div>
-      <div slot="item-icon-active">
+      <div slot="item-icon-active" class="icon_ac">
         <img src="~assets/img/tabbar/fl_ac.png" alt />
       </div>
       <span slot="item-text">分类</span>
@@ -22,7 +22,7 @@
       <div slot="item-icon">
         <img src="~assets/img/tabbar/shop.png" alt />
       </div>
-      <div slot="item-icon-active">
+      <div slot="item-icon-active" class="icon_ac">
         <img src="~assets/img/tabbar/shop_ac.png" alt />
       </div>
       <span slot="item-text">购物车</span>
@@ -31,7 +31,7 @@
       <div slot="item-icon">
         <img src="~assets/img/tabbar/me.png" alt />
       </div>
-      <div slot="item-icon-active">
+      <div slot="item-icon-active" class="icon_ac">
         <img src="~assets/img/tabbar/me_ac.png" alt />
       </div>
       <span slot="item-text">我的</span>
@@ -53,7 +53,11 @@ export default {
 </script>
 
 <style>
-.tab-bar{
-  z-index: 999
+.tab-bar {
+  z-index: 999;
+}
+.icon_ac img {
+  width: 40px !important;
+  height: 40px !important;
 }
 </style>

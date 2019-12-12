@@ -14,9 +14,9 @@ export default {
 #tab-bar {
   position: absolute;
   width: 100%;
-  height: 49px;
+  height: 45px;
   bottom: 0px;
   overflow: hidden;
-  background: black;
+  background: #ff8198;
 }
 </style>

@@ -26,6 +26,8 @@
       <!-- 推荐商品 -->
       <GoodsList ref="recommend" :goods="recommends" />
     </scroll>
+    <!-- 底部导航栏 -->
+    <DetailBottomBar />
     <BackTop @click.native="backClick" v-show="isShowBackTop" />
   </div>
 </template>
@@ -38,6 +40,7 @@ import DetailShopInfo from "./childComponents/DetailShopInfo";
 import DetailGoodsInfo from "./childComponents/DetailGoodsInfo";
 import DetailParamsInfo from "./childComponents/DetailParamsInfo";
 import DetailCommentInfo from "./childComponents/DetailCommentInfo";
+import DetailBottomBar from "./childComponents/DetailBottomBar";
 
 import XinXin from "components/content/xinxin/XinXin";
 
@@ -58,6 +61,7 @@ export default {
     DetailGoodsInfo,
     DetailParamsInfo,
     DetailCommentInfo,
+    DetailBottomBar,
     XinXin,
     Scroll,
     BackTop,
@@ -128,7 +132,7 @@ export default {
       let positionY = -position.y;
       // backTop显示隐藏
       this.isShowBackTop = positionY > 1000;
-      for (let i = 0; i < this.themeTopYs.length; i++) {
+      for (let i = 0; i < 4; i++) {
         if (this.currentIndex !== i && positionY >= this.themeTopYs[i]) {
           this.currentIndex = i;
           this.$refs.navbar.currentIndex = this.currentIndex;
@@ -162,6 +166,6 @@ export default {
   top: -26px;
   left: 0;
   right: 0;
-  bottom: 0px;
+  bottom: 35px;
 }
 </style>

@@ -14,11 +14,6 @@ export default {
   props: {
     path: String
   },
-  data() {
-    return {
-      // isActive: false
-    };
-  },
   computed: {
     isActive() {
       return this.$route.path.indexOf(this.path) != -1;
@@ -46,13 +41,13 @@ export default {
 #tab-bar li img {
   width: 24px;
   height: 24px;
-  margin-top: 3px;
 }
 #tab-bar li span {
   position: relative;
 }
 .active {
   color: #f2cd86;
+  font-size: 0px;
 }
 </style>
 
