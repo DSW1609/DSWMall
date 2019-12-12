@@ -59,5 +59,6 @@ export default {
 .icon_ac img {
   width: 40px !important;
   height: 40px !important;
+  transition: 0.3s;
 }
 </style>

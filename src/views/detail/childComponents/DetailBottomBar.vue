@@ -27,7 +27,7 @@
     <!-- 右侧-->
     <div class="bottom_bar_item item_r">
       <!-- shopcar -->
-      <div class="item_r_one item_add">
+      <div class="item_r_one item_add" @click="addToCart">
         <span>加入购物车</span>
       </div>
       <!-- buy -->
@@ -39,7 +39,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    addToCart() {
+      this.$emit("addCart")
+    }
+  }
+};
 </script>
 
 <style scoped>

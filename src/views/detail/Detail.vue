@@ -27,7 +27,7 @@
       <GoodsList ref="recommend" :goods="recommends" />
     </scroll>
     <!-- 底部导航栏 -->
-    <DetailBottomBar />
+    <DetailBottomBar @addCart="addToCart" />
     <BackTop @click.native="backClick" v-show="isShowBackTop" />
   </div>
 </template>
@@ -148,6 +148,22 @@ export default {
     // 标签点击事件
     titleClick(index) {
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 0);
+    },
+    addToCart() {
+      // 1.获取购物车展示的商品信息
+      const product = {};
+      // 图片
+      product.image = this.images[0];
+      // 标题
+      product.title = this.goods.title;
+      // 描述信息
+      product.desc = this.goods.desc;
+      // 价格
+      product.price = this.goods.realPrice;
+      // iid
+      product.iid = this.iid;
+      // 2.添加到购物车
+      this.$store.dispatch("addCart", product);
     }
   }
 };
