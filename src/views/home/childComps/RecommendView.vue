@@ -1,10 +1,8 @@
 <template>
   <div id="recommend">
     <div class="recommend-item" v-for="(item,index) in recommends" :key="index">
-      <a :href="item.link">
-        <img :src="item.image" alt />
-        <div>{{item.title}}</div>
-      </a>
+      <img :src="item.image" alt />
+      <div>{{item.title}}</div>
     </div>
   </div>
 </template>

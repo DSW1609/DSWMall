@@ -90,6 +90,8 @@ export default {
     // 根据iid请求详情页数据
     getDetail(this.iid).then(res => {
       const data = res.result;
+      // console.log(data);
+
       // 获取顶部的图片轮播数据
       this.images = data.itemInfo.topImages;
       // 获取商品信息
@@ -162,6 +164,7 @@ export default {
       product.price = this.goods.realPrice;
       // iid
       product.iid = this.iid;
+
       // 2.添加到购物车
       this.$store.dispatch("addCart", product);
     }
