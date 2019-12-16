@@ -22,7 +22,7 @@
         </div>
         <!-- 商品价格 -->
         <div class="item_price">
-          <i>🐏</i>
+          <i>￥</i>
           <span>{{product.price}}</span>
         </div>
         <!-- 商品数量 -->
@@ -38,17 +38,17 @@
 
 <script>
 export default {
-  data() {
-    return {
-      // 定义按钮是否选中
-      isImg: false
-    };
-  },
   props: {
     product: {
       type: Object,
       default: {}
     }
+  },
+  data() {
+    return {
+      // 定义按钮是否选中
+      isImg: this.product.checked
+    };
   },
   methods: {
     imgclick() {
@@ -142,7 +142,7 @@ export default {
 }
 .item_price i {
   position: relative;
-  top: -2px;
+  top: -1px;
   font-size: 10px;
   padding-right: 1px;
   font-style: normal;

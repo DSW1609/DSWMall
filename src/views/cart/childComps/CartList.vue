@@ -3,7 +3,7 @@
     <Scroll class="content" ref="scroll">
       <!-- 心心 -->
       <XinXin />
-      <CartListItem v-for="(item,index) in cartList" :key="index" :product="item" />
+      <CartListItem ref="listItem" v-for="(item,index) in cartList" :key="index" :product="item" />
     </Scroll>
   </div>
 </template>
@@ -18,10 +18,23 @@ export default {
     XinXin,
     Scroll
   },
+  data() {
+    return {
+      isall: false
+    };
+  },
   computed: {
     cartList() {
       return this.$store.state.cartList;
     }
+    // itemClick() {
+    //   for (const item of this.$refs.listItem) {
+    //     if (!item.product.checked) {
+    //       this.isall = false;
+    //     }
+    //     this.isall = true;
+    //   }
+    // }
   },
   activated() {
     this.$refs.scroll.refresh();

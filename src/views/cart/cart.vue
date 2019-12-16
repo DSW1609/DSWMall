@@ -15,9 +15,9 @@
       </span>
     </div>
     <!-- 商品列表 -->
-    <CartList />
+    <CartList ref="cartlist" />
     <!-- 底部汇总 -->
-    <CartListAll />
+    <CartListAll ref="listall" @allClick="allClick" />
   </div>
 </template>
 
@@ -34,6 +34,17 @@ export default {
   computed: {
     cartLength() {
       return this.$store.state.cartList.length;
+    }
+  },
+  methods: {
+    allClick() {
+      // 访问CartList内的cartList方法
+      const cartList = this.$refs.cartlist.cartList;
+      let allPrice = 0;
+      for (const item of cartList) {
+        allPrice += item.count * item.price;
+      }
+      this.$refs.listall.price = allPrice;
     }
   }
 };

@@ -42,7 +42,7 @@
 export default {
   methods: {
     addToCart() {
-      this.$emit("addCart")
+      this.$emit("addCart");
     }
   }
 };

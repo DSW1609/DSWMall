@@ -1,8 +1,8 @@
 <template>
   <div class="cartListAll">
     <!-- 全选按钮 -->
-    <div class="cart_img">
-      <img @click="imgclick" :src="imgsrc" alt />
+    <div class="cart_img" @click="imgclick">
+      <img :src="imgsrc" alt />
       <span>全选</span>
     </div>
     <!-- 合计结算 -->
@@ -10,7 +10,7 @@
       <!-- 合计 -->
       <div class="cart_total">
         <span>合计:</span>
-        <em>🐏</em>
+        <em>￥</em>
         <i>{{price}}</i>
       </div>
       <!-- 结算 -->
@@ -35,7 +35,10 @@ export default {
     imgclick() {
       this.isImg = !this.isImg;
       // 发送事件到cart.vue
-      // cart.vue根据VueX的值遍历
+      this.$emit("allClick");
+      if (!this.isImg) {
+        this.price = 0;
+      }
     }
   },
   computed: {
@@ -43,6 +46,10 @@ export default {
       const src = this.isImg ? "yes" : "no";
       return require("../../../assets/img/cart/" + src + ".png");
     }
+  },
+  deactivated() {
+    this.isImg = false;
+    this.price = 0;
   }
 };
 </script>
@@ -92,7 +99,7 @@ export default {
   font-style: normal;
   color: #ff5c0a;
   font-weight: bold;
-  top: 4px;
+  top: 1px;
 }
 .cart_stment {
   position: absolute;
