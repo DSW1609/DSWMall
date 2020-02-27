@@ -35,14 +35,29 @@
         <span>购买</span>
       </div>
     </div>
+    <!-- 加入购物车成功弹窗 -->
+    <transition mode="out-in" enter-active-class="animated bounceIn">
+      <div class="tt" v-show="isS">
+        <span>加入购物车成功！</span>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      isS: false
+    };
+  },
   methods: {
     addToCart() {
       this.$emit("addCart");
+      this.isS = true;
+      setTimeout(() => {
+        this.isS = false;
+      }, 1000);
     }
   }
 };
@@ -97,5 +112,21 @@ export default {
   position: relative;
   margin-top: 4px;
   width: 20px;
+}
+.tt {
+  position: absolute;
+  width: 46vw;
+  height: 36px;
+  background: #f2cd86;
+  text-align: center;
+  line-height: 36px;
+  border-radius: 15px;
+  top: -50vh;
+  color: #fff;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 999;
+  opacity: 0.8;
 }
 </style>
